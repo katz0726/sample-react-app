@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import _ from 'lodash'
+import _ from 'lodash';
 
-import { Link } from 'react-router-dom'
 import {
   Table,
   TableBody,
@@ -11,18 +11,21 @@ import {
   TableHeaderColumn,
   TableRow,
   TableRowColumn
-} from 'material-ui/Table'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
-import ContentAdd from 'material-ui/svg-icons/content/add'
+} from 'material-ui/Table';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import { readEvents } from '../actions'
+import { readEvents } from '../actions';
 
 class EventsIndex extends Component {
+  // renderメソッドが実行された後に呼ばれる
   componentDidMount() {
-    this.props.readEvents()
-  }
+    this.props.readEvents();
+  };
 
   renderEvents() {
+    // collectionの全要素を1つずつ取り出し、テーブルの行を配列として取得します。
+    // keyにはユニークな値を指定するためにeventのidを設定
     return _.map(this.props.events, event => (
       <TableRow key={event.id}>
         <TableRowColumn>{event.id}</TableRowColumn>
@@ -34,14 +37,14 @@ class EventsIndex extends Component {
         <TableRowColumn>{event.body}</TableRowColumn>
       </TableRow>
     ))
-  }
+  };
 
   render() {
     const style = {
       position: "fixed",
       right: 12,
       bottom: 12
-    }
+    };
 
     return (
       <React.Fragment>
@@ -56,8 +59,8 @@ class EventsIndex extends Component {
           >
             <TableRow>
               <TableHeaderColumn>ID</TableHeaderColumn>
-              <TableHeaderColumn>Title</TableHeaderColumn>
-              <TableHeaderColumn>Body</TableHeaderColumn>
+              <TableHeaderColumn>タイトル</TableHeaderColumn>
+              <TableHeaderColumn>内容</TableHeaderColumn>
             </TableRow>
           </TableHeader>
 
@@ -66,12 +69,15 @@ class EventsIndex extends Component {
           </TableBody>
         </Table>
       </React.Fragment>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => ({ events: state.events })
+// stateを取得する
+const mapStateToProps = state => ({ events: state.events });
 
-const mapDispatchToProps = { readEvents }
+// stateを書き換える
+const mapDispatchToProps = { readEvents };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventsIndex)
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventsIndex);

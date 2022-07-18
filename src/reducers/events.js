@@ -7,6 +7,7 @@ import {
   DELETE_EVENT,
 } from '../actions';
 
+// 各アクションごとのレスポンス情報の加工、返却を行う
 const events = (events = {}, action) => {
   switch (action.type) {
     case CREATE_EVENT:

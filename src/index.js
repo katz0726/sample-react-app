@@ -17,6 +17,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import reportWebVitals from './reportWebVitals';
 
 // 非同期処理ライブラリ(redux-thunk)を使用するために applyMiddlewareでミドルウェアを適用する
+// 開発環境ではデバッグツールを利用する
 const enhancer = process.env.NODE_ENV === 'development' ?
   composeWithDevTools(applyMiddleware(thunk)) :applyMiddleware(thunk);
 const store = createStore(reducer, enhancer);

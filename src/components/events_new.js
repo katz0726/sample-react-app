@@ -9,6 +9,7 @@ import TextField from 'material-ui/TextField'
 import { postEvent } from '../actions'
 
 class EventsNew extends Component {
+  // 本classに従属するメソッドにpropsを紐付ける
   constructor(props) {
     super(props)
 
@@ -36,6 +37,12 @@ class EventsNew extends Component {
   }
 
   render() {
+    /**
+     * handleSubmit: submitをしたときにinputのvalueを引数で取得できるprops
+     * pristine: フォームに入力されるとfalseを返す => 送信ボタンの活性/非活性を制御
+     * submitting: Submitボタンを押下するとtrueを返す => 二重送信防止
+     * invalid: バリデーションエラーがあるときはtrueになる
+     */
     const { handleSubmit, pristine, submitting, invalid } = this.props
     const style = { margin: 12 }
 
@@ -51,6 +58,7 @@ class EventsNew extends Component {
   }
 }
 
+// バリデーション処理
 const validate = values => {
   const errors = {}
   if (!values.title) errors.title = "タイトルを入力して下さい"
@@ -62,6 +70,8 @@ const validate = values => {
 
 const mapDispatchToProps = { postEvent }
 
+// コンポーネントをreduxFormでdecorateすることで、
+// コンポーネントのpropsが拡張され、pristine、submitting、invalid等の属性が追加される
 export default connect(null, mapDispatchToProps)(
   reduxForm({ validate, form: 'eventNewForm' })(EventsNew)
 )

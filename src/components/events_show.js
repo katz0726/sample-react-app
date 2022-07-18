@@ -9,12 +9,14 @@ import TextField from 'material-ui/TextField'
 import { getEvent, deleteEvent, putEvent } from '../actions'
 
 class EventsShow extends Component {
+  // 本classに従属するメソッドにpropsを紐付ける
   constructor(props) {
     super(props)
     this.onSubmit = this.onSubmit.bind(this)
     this.onDeleteClick = this.onDeleteClick.bind(this)
   }
 
+  // renderメソッドが実行された後に呼ばれる
   componentDidMount() {
     const { id } = this.props.match.params
     if (id) this.props.getEvent(id)
@@ -35,12 +37,14 @@ class EventsShow extends Component {
     )
   }
 
+  // 削除ボタンクリック時処理
   async onDeleteClick() {
     const { id } = this.props.match.params
     await this.props.deleteEvent(id)
     this.props.history.push('/')
   }
 
+  // 送信ボタンクリック時処理
   async onSubmit(values) {
     await this.props.putEvent(values)
     this.props.history.push('/')
@@ -65,6 +69,7 @@ class EventsShow extends Component {
   }
 }
 
+// バリデーション
 const validate = values => {
   const errors = {}
 
@@ -81,6 +86,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = { deleteEvent, getEvent, putEvent }
 
+// コンポーネントをreduxFormでdecorateすることで、
+// コンポーネントのpropsが拡張され、pristine、submitting、invalid等の属性が追加される
 export default connect(mapStateToProps, mapDispatchToProps)(
   reduxForm({ validate, form: 'eventShowForm', enableReinitialize: true })(EventsShow)
 )
